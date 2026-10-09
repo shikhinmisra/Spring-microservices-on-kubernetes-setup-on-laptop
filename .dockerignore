@@ -1,0 +1,11 @@
+**/target
+**/node_modules
+**/.angular
+**/dist
+.git
+.idea
+local-dev
+k8s
+argocd
+docs
+scripts

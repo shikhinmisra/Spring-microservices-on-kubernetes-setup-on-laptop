@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Environment-neutral application manifests. Image names here are placeholders;
+# each overlay maps them to a real registry/tag via the `images:` field.
+resources:
+  - common-config.yml
+  - api-gateway.yml
+  - product-service.yml
+  - order-service.yml
+  - inventory-service.yml
+  - notification-service.yml
+  - frontend.yml

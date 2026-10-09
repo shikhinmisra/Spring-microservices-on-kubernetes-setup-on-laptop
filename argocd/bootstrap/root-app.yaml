@@ -1,0 +1,21 @@
+# App-of-apps: apply this once (kubectl apply -n argocd -f argocd/bootstrap/root-app.yaml)
+# and Argo CD will create/manage everything under argocd/projects and argocd/applications.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/shikhinmisra/spring-microservices-on-kubernetes-setup-on-laptop.git
+    targetRevision: main
+    path: argocd
+    directory:
+      recurse: true
+      exclude: 'bootstrap/*'
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: argocd
+  syncPolicy:
+    automated: { prune: true, selfHeal: true }

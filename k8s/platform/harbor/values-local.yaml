@@ -1,0 +1,15 @@
+# Helm values for Harbor on Docker Desktop Kubernetes (kubeadm cluster type).
+# Install:  helm upgrade --install harbor harbor/harbor -n harbor --create-namespace -f k8s/platform/harbor/values-local.yaml
+# Then switch the service to LoadBalancer so Windows can reach it (see scripts/windows/install-harbor.ps1).
+expose:
+  type: nodePort
+  tls:
+    enabled: false
+  nodePort:
+    ports:
+      http:
+        nodePort: 30002
+externalURL: http://localhost:30002
+harborAdminPassword: Harbor12345   # local-dev default only; override with --set for anything shared
+trivy:
+  enabled: false                   # saves ~1 GB RAM on a laptop

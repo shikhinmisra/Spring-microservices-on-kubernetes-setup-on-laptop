@@ -1,0 +1,15 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: microservices
+  namespace: argocd
+spec:
+  description: Spring microservices and their backing infrastructure on the local laptop cluster
+  sourceRepos:
+    - https://github.com/shikhinmisra/spring-microservices-on-kubernetes-setup-on-laptop.git
+  destinations:
+    - server: https://kubernetes.default.svc
+      namespace: default
+  clusterResourceWhitelist:
+    - group: ""
+      kind: PersistentVolume

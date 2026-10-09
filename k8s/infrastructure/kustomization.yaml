@@ -1,0 +1,17 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Backing services the microservices depend on: databases, Kafka, Keycloak and the Grafana observability stack.
+namespace: default
+resources:
+  - mysql.yml
+  - mongodb.yml
+  - zookeeper.yml
+  - kafka.yml
+  - schema-registry.yml
+  - kafka-ui.yml
+  - keycloak-mysql.yml
+  - keycloak.yml
+  - prometheus.yml
+  - grafana.yml
+  - loki.yml
+  - tempo.yml
