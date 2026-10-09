@@ -1,0 +1,4 @@
+# Config for kubernetes-mcp-server (see .mcp.json).
+# Read-only on purpose: Claude can inspect pods, logs, events and resources through MCP,
+# but every change to the cluster goes through git + kubectl -k / scripts, where the hooks and approval rules apply.
+read_only = true

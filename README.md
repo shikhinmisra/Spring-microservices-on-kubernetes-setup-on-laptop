@@ -40,6 +40,7 @@ Observability: Prometheus, Grafana, Loki, Tempo.
 │   │   └── overlays/full/          # backend + edge
 │   └── platform/harbor/            # Helm values for the Harbor registry
 ├── argocd/                         # GitOps (next phase): app-of-apps, AppProject, Applications
+├── CLAUDE.md, .claude/, .mcp.json  # Claude Code: rules, skills, subagents, hooks, MCP servers
 ├── scripts/windows/                # install-harbor, build-and-push, deploy (PowerShell)
 ├── local-dev/                      # docker-compose alternative for running without Kubernetes
 └── docs/                           # Laptop-Kubernetes-Guide.pdf (living guide), setup notes, troubleshooting
@@ -77,6 +78,11 @@ Access:
 1. `build-and-push.ps1 -Tag 1.1`
 2. Change `newTag` for the service in `k8s/apps/overlays/local/kustomization.yaml`, commit, push.
 3. Today: run `deploy.ps1`. With Argo CD: it syncs the commit automatically — see [argocd/README.md](argocd/README.md).
+
+## Working with Claude Code
+The repo ships an agentic setup: `CLAUDE.md` rules, skills (`/new-service`, `/add-feature`, `/release-version`,
+`/deploy-local`, `/troubleshoot-cluster`), review/test subagents, safety and formatting hooks, and MCP servers for
+Kubernetes and GitHub. See [docs/claude-code-setup.md](docs/claude-code-setup.md).
 
 ## Credits
 Application code is based on the open-source

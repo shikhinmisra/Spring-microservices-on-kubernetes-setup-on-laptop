@@ -39,6 +39,22 @@
           </excludes>
         </configuration>
       </plugin>
+      <plugin>
+        <!-- Formatting only: not bound to any phase. Run: mvn spotless:apply (also used by the Claude Code format hook). -->
+        <groupId>com.diffplug.spotless</groupId>
+        <artifactId>spotless-maven-plugin</artifactId>
+        <version>2.43.0</version>
+        <configuration>
+          <java>
+            <includes>
+              <include>src/main/java/**/*.java</include>
+              <include>src/test/java/**/*.java</include>
+            </includes>
+            <palantirJavaFormat/>
+            <removeUnusedImports/>
+          </java>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
 </project>

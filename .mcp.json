@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "kubernetes": {
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "kubernetes-mcp-server@latest", "--config", "${CLAUDE_PROJECT_DIR:-.}/.claude/mcp/kubernetes.toml"]
+    },
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/",
+      "headers": { "Authorization": "Bearer ${GITHUB_PAT}" }
+    }
+  }
+}
