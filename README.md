@@ -6,6 +6,9 @@ deployments in the next phase.
 
 ![Architecture](docs/architecture.png)
 
+> 📘 **[Laptop Kubernetes Guide (PDF)](docs/Laptop-Kubernetes-Guide.pdf)** — the project explained in plain words:
+> what runs, ports and links, how it was set up, daily use and troubleshooting. Updated as the project changes.
+
 ## Services
 | Service | Port | Backing store / integration |
 |---|---|---|
@@ -39,7 +42,7 @@ Observability: Prometheus, Grafana, Loki, Tempo.
 ├── argocd/                         # GitOps (next phase): app-of-apps, AppProject, Applications
 ├── scripts/windows/                # install-harbor, build-and-push, deploy (PowerShell)
 ├── local-dev/                      # docker-compose alternative for running without Kubernetes
-└── docs/                           # setup notes and troubleshooting
+└── docs/                           # Laptop-Kubernetes-Guide.pdf (living guide), setup notes, troubleshooting
 ```
 
 ## Default: backend only
