@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Minimum backing services for product/order/inventory. Default on the laptop (~2 GB).
+namespace: default
+resources:
+  - mysql.yml
+  - mongodb.yml
+  - zookeeper.yml
+  - kafka.yml
+  - schema-registry.yml

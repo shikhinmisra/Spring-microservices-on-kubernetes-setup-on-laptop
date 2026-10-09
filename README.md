@@ -27,16 +27,26 @@ Observability: Prometheus, Grafana, Loki, Tempo.
 │   ├── api-gateway/  product-service/  order-service/  inventory-service/  notification-service/
 │   └── frontend/                   # Angular app (own Dockerfile)
 ├── k8s/                            # everything Kubernetes — this is what Argo CD will sync
-│   ├── infrastructure/             # MySQL, MongoDB, Kafka, Schema Registry, Keycloak, Grafana stack (kustomize)
+│   ├── infrastructure/
+│   │   ├── core/                   # MySQL, MongoDB, ZooKeeper, Kafka, Schema Registry  (default)
+│   │   └── extras/                 # Keycloak, Kafka UI, Prometheus, Grafana, Loki, Tempo (optional)
 │   ├── apps/
-│   │   ├── base/                   # environment-neutral Deployments/Services/ConfigMaps
-│   │   └── overlays/local/         # laptop: images -> localhost:30002 (Harbor), tags pinned here
+│   │   ├── base/backend/           # product, order, inventory + shared ConfigMap         (default)
+│   │   ├── base/edge/              # api-gateway, notification-service, frontend          (optional)
+│   │   ├── overlays/local/         # backend only, images from Harbor - tags pinned here
+│   │   └── overlays/full/          # backend + edge
 │   └── platform/harbor/            # Helm values for the Harbor registry
 ├── argocd/                         # GitOps (next phase): app-of-apps, AppProject, Applications
 ├── scripts/windows/                # install-harbor, build-and-push, deploy (PowerShell)
 ├── local-dev/                      # docker-compose alternative for running without Kubernetes
 └── docs/                           # setup notes and troubleshooting
 ```
+
+## Default: backend only
+The full stack needs 8-10 GB for Docker Desktop and overloaded a 16 GB laptop (API server stopped responding).
+So the default deployment is **backend only**: product, order and inventory services with MongoDB, MySQL,
+Kafka/ZooKeeper and Schema Registry (~3 GB incl. Harbor). Test them with Postman via port-forward.
+Gateway, Keycloak, notification, frontend and observability are kept in `extras/` / `edge/` and deployed with `-Full`.
 
 ## Prerequisites (Windows)
 - Docker Desktop with Kubernetes enabled, **cluster type: Kubeadm** (Settings → Kubernetes)
@@ -48,18 +58,17 @@ Observability: Prometheus, Grafana, Loki, Tempo.
 ```powershell
 # 1. Registry
 powershell -ExecutionPolicy Bypass -File scripts\windows\install-harbor.ps1
-# 2. Build all images and push to Harbor (localhost:30002/microservices/*)
+# 2. Build backend images and push to Harbor (localhost:30002/microservices/*)   (-All for everything)
 powershell -ExecutionPolicy Bypass -File scripts\windows\build-and-push.ps1 -Tag 1.0
-# 3. Deploy infrastructure + apps
+# 3. Deploy core infrastructure + backend                                          (-Full for everything)
 powershell -ExecutionPolicy Bypass -File scripts\windows\deploy.ps1
 ```
-Or with plain kubectl: `kubectl apply -k k8s/infrastructure` then `kubectl apply -k k8s/apps/overlays/local`.
+Or with plain kubectl: `kubectl apply -k k8s/infrastructure/core` then `kubectl apply -k k8s/apps/overlays/local`.
 
 Access:
 - Harbor: http://localhost:30002 (admin / Harbor12345 — local default)
-- API gateway: `kubectl port-forward svc/api-gateway 9000:9000` → http://localhost:9000/swagger-ui.html
-- Keycloak: `kubectl port-forward svc/keycloak 8080:8080` (admin / admin)
-- Grafana: `kubectl port-forward svc/grafana 3000:3000`
+- product / order / inventory: `kubectl port-forward svc/product-service 8080:8080` (8081, 8082 likewise)
+- With `-Full`: api-gateway 9000 (swagger at /swagger-ui.html), keycloak 8080 (admin / admin), grafana 3000
 
 ## Releasing a new version (today → with Argo CD)
 1. `build-and-push.ps1 -Tag 1.1`

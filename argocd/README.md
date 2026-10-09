@@ -7,8 +7,8 @@ argocd/
 ├── bootstrap/root-app.yaml        # app-of-apps: the only thing you apply by hand
 ├── projects/microservices.yaml    # AppProject limiting repo + destination
 └── applications/
-    ├── infrastructure.yaml        # syncs k8s/infrastructure          (sync-wave 0)
-    └── microservices-local.yaml   # syncs k8s/apps/overlays/local      (sync-wave 1)
+    ├── infrastructure.yaml        # syncs k8s/infrastructure/core      (sync-wave 0)
+    └── microservices-local.yaml   # syncs k8s/apps/overlays/local      (sync-wave 1, backend only)
 ```
 
 ## Planned steps
@@ -22,3 +22,6 @@ argocd/
    (Argo CD Image Updater can automate the tag bump later.)
 
 New environments = new folder under `k8s/apps/overlays/` + a matching Application here.
+For the full system, add Applications for `k8s/infrastructure/extras` and `k8s/apps/overlays/full`
+(and remove `microservices-local`) once Docker Desktop has the memory for it.
+Note: Argo CD itself needs ~0.5-1 GB; on the laptop install it without Dex/notifications to save memory.

@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/shikhinmisra/spring-microservices-on-kubernetes-setup-on-laptop.git
     targetRevision: main
-    path: k8s/infrastructure
+    path: k8s/infrastructure/core
   destination:
     server: https://kubernetes.default.svc
     namespace: default

@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+# Optional: Keycloak (needed by api-gateway), Kafka UI and the observability stack.
+# Only enable when Docker Desktop has spare memory (> 2 GB available).
+namespace: default
+resources:
+  - keycloak-mysql.yml
+  - keycloak.yml
+  - kafka-ui.yml
+  - prometheus.yml
+  - grafana.yml
+  - loki.yml
+  - tempo.yml
