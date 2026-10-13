@@ -17,6 +17,7 @@ Phases 3, 10 and 11 can run in parallel with the others.
 
 ## 1. Repository skeleton
 - [ ] `git init`; `.gitignore`, `.dockerignore`, `README.md`
+- [ ] Copy `docs/templates/CLAUDE.md` to the repo root as `CLAUDE.md`
 - [ ] Root parent `pom.xml`: Spring Boot 3.2, Java 21, dependencyManagement, Testcontainers BOM, modules = `services/*`
 - [ ] Folders: `services/`, `k8s/`, `argocd/`, `scripts/windows/`, `local-dev/`, `docs/`
 
